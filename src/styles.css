@@ -90,6 +90,22 @@ body {
   /* Allow drag region to catch clicks */
 }
 
+.version-badge {
+  font-size: 9px;
+  font-weight: 500;
+  background: var(--accent-light);
+  color: var(--accent);
+  padding: 1px 5px;
+  border-radius: 4px;
+  opacity: 0.8;
+}
+
+@media (prefers-color-scheme: dark) {
+  .version-badge {
+    background: rgba(217, 119, 6, 0.15);
+  }
+}
+
 .titlebar-controls {
   display: flex;
   gap: 4px;
