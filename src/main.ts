@@ -332,11 +332,11 @@ window.addEventListener("DOMContentLoaded", () => {
   minifyBtn = document.querySelector("#minify-btn");
 
   if (refreshBtn) {
-    refreshBtn.addEventListener("click", () => fetchUsage(true));
+    refreshBtn.addEventListener("click", () => fetchUsage());
   }
 
   if (retryBtn) {
-    retryBtn.addEventListener("click", () => fetchUsage(true));
+    retryBtn.addEventListener("click", () => fetchUsage());
   }
 
   if (closeBtn) {
@@ -441,11 +441,10 @@ window.addEventListener("DOMContentLoaded", () => {
     updateMinHeight();
   }, 100);
 
-  // Initial fetch (use test data for initial load)
-  fetchUsage(true);
+  // Initial fetch
+  fetchUsage();
 
   // Set up automatic refresh every 5 minutes (300000ms)
-  // Using test data for development/testing
   function startAutoRefresh() {
     if (refreshInterval) {
       clearInterval(refreshInterval);
@@ -453,7 +452,7 @@ window.addEventListener("DOMContentLoaded", () => {
     refreshInterval = window.setInterval(() => {
       // Only refresh if window is visible
       if (!document.hidden) {
-        fetchUsage(true); // Using test data
+        fetchUsage();
       }
     }, 300000); // 5 minutes
   }
@@ -473,7 +472,7 @@ window.addEventListener("DOMContentLoaded", () => {
       // Window is visible, resume refresh
       startAutoRefresh();
       // Also refresh immediately when window becomes visible
-      fetchUsage(true); // Using test data
+      fetchUsage();
     }
   });
 });
