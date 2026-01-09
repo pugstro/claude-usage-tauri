@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="/src/styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Claude Usage</title>
+  <script type="module" src="/src/main.ts" defer></script>
+</head>
+
+<body>
+  <div class="popup-arrow"></div>
+  <div data-tauri-drag-region class="titlebar">
+    <div class="titlebar-logo">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2H2v10a10 10 0 0 0 10 10h10V12a10 10 0 0 0-10-10z" />
+      </svg>
+      <span>Claude Usage</span>
+    </div>
+    <div class="titlebar-controls">
+      <button class="titlebar-button" id="titlebar-close">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <main class="container">
+    <div class="header">
+      <div class="header-status">
+        <div class="status-indicator"></div>
+        <span id="last-updated">Updating...</span>
+      </div>
+      <button id="refresh-btn" class="refresh-btn" title="Refresh Usage">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.3" />
+        </svg>
+      </button>
+    </div>
+
+    <div id="loading" class="loading">
+      <div class="spinner"></div>
+      <p>Syncing with Anthropic...</p>
+    </div>
+
+    <div id="error" class="error hidden">
+      <div class="error-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+      </div>
+      <p id="error-message"></p>
+      <button id="retry-btn" class="retry-btn">Try Again</button>
+    </div>
+
+    <div id="usage-content" class="usage-content hidden">
+      <div id="usage-rows"></div>
+    </div>
+  </main>
+</body>
+
+</html>
