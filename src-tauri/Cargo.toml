@@ -2,7 +2,7 @@
 name = "claude-usage-tauri"
 version = "0.1.0"
 description = "A lightweight desktop app (macOS) for displaying Claude Code usage limits"
-authors = ["pugstro <https://pugstro.online>"]
+authors = ["pugstro <https://pugcorp.online>"]
 license = "MIT"
 repository = "https://github.com/pugstro/claude-usage-tauri"
 homepage = "https://github.com/pugstro/claude-usage-tauri"

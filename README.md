@@ -4,7 +4,7 @@ A lightweight desktop app (macOS only) for displaying Claude Code usage limits.
 
 Built with [Tauri v2](https://tauri.app), TypeScript, and Rust.
 
-[GitHub](https://github.com/pugstro/claude-usage-tauri) • [Author](https://pugstro.online)
+[GitHub](https://github.com/pugstro/claude-usage-tauri) • [Author](https://pugcorp.online)
 
 ## Features
 
@@ -157,4 +157,4 @@ This is an unofficial tool not affiliated with Anthropic. It uses an undocumente
 
 ---
 
-Made by [pugstro](https://pugstro.online)
+Made by [pugstro](https://pugcorp.online)

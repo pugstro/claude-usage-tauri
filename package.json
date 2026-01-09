@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "type": "module",
   "description": "A lightweight desktop app (macOS) for displaying Claude Code usage limits",
-  "author": "pugstro <https://pugstro.online>",
+  "author": "pugstro <https://pugcorp.online>",
   "license": "MIT",
   "repository": {
     "type": "git",
