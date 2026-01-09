@@ -1,8 +1,11 @@
 [package]
 name = "claude-usage-tauri"
 version = "0.1.0"
-description = "Claude Usage - A lightweight desktop app for Claude Code usage limits"
-authors = ["you"]
+description = "A lightweight desktop app (macOS) for displaying Claude Code usage limits"
+authors = ["pugstro <https://pugstro.online>"]
+license = "MIT"
+repository = "https://github.com/pugstro/claude-usage-tauri"
+homepage = "https://github.com/pugstro/claude-usage-tauri"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

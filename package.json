@@ -1,8 +1,15 @@
 {
   "name": "claude-usage-tauri",
-  "private": true,
   "version": "0.1.0",
   "type": "module",
+  "description": "A lightweight desktop app (macOS) for displaying Claude Code usage limits",
+  "author": "pugstro <https://pugstro.online>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pugstro/claude-usage-tauri.git"
+  },
+  "homepage": "https://github.com/pugstro/claude-usage-tauri",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
