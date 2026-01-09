@@ -1,3 +1,9 @@
+html {
+  overflow: hidden !important;
+  height: 100%;
+  width: 100%;
+}
+
 :root {
   --bg-color: #ffffff;
   --text-primary: #1a1a1a;
@@ -20,6 +26,7 @@
   background-color: transparent;
   -webkit-font-smoothing: antialiased;
   user-select: none;
+  overflow: hidden !important;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -37,10 +44,14 @@ body {
   margin: 0;
   padding: 0;
   height: 100vh;
-  overflow: hidden;
+  width: 100vw;
+  overflow: hidden !important;
   display: flex;
   flex-direction: column;
   background: transparent;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 .popup-arrow {
@@ -70,24 +81,33 @@ body {
 .titlebar {
   height: 44px;
   background: var(--bg-color);
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  /* logo, spacer, controls */
   align-items: center;
   padding: 0 12px;
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
   z-index: 100;
+  overflow: hidden;
+  position: relative;
 }
 
 .titlebar-logo {
-  display: flex;
+  display: flex !important;
   align-items: center;
   gap: 8px;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--text-secondary);
   pointer-events: none;
-  /* Allow drag region to catch clicks */
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.titlebar-logo span:not(.version-badge) {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .version-badge {
@@ -98,6 +118,10 @@ body {
   padding: 1px 5px;
   border-radius: 4px;
   opacity: 0.8;
+  white-space: nowrap;
+  flex-shrink: 0;
+  display: inline-block !important;
+  /* ALWAYS VISIBLE */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -107,28 +131,47 @@ body {
 }
 
 .titlebar-controls {
-  display: flex;
+  display: flex !important;
   gap: 4px;
   pointer-events: auto;
-  /* Ensure buttons are clickable */
+  justify-self: end;
+  z-index: 10;
 }
 
 .titlebar-button {
   background: transparent;
   border: none;
-  padding: 6px;
+  padding: 8px;
   border-radius: 6px;
   color: var(--text-secondary);
-  display: flex;
+  display: flex !important;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
   cursor: pointer;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
 }
 
 .titlebar-button:hover {
   background: var(--progress-bg);
   color: var(--text-primary);
+}
+
+.titlebar-button.active {
+  background: var(--accent-light);
+  color: var(--accent);
+}
+
+@media (prefers-color-scheme: dark) {
+  .titlebar-button.active {
+    background: rgba(217, 119, 6, 0.15);
+  }
+}
+
+.titlebar-button.active:hover {
+  background: var(--accent);
+  color: white;
 }
 
 #titlebar-close:hover {
@@ -140,57 +183,53 @@ body {
 .container {
   flex: 1;
   background: var(--bg-color);
-  padding: 16px;
-  overflow-y: auto;
+  padding: 24px 24px 12px 24px;
+  /* Further reduced bottom padding */
+  overflow: hidden !important;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  gap: 20px;
+  /* Reduced gap */
 }
 
 .header-status {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 11px;
+  gap: 6px;
+  font-size: 12px;
   color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 1;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .status-indicator {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   background: var(--success);
-  box-shadow: 0 0 8px var(--success);
+  box-shadow: 0 0 6px var(--success);
+  flex-shrink: 0;
+  animation: pulse 2s infinite;
 }
 
-.refresh-btn {
-  background: transparent;
-  border: 1px solid var(--border);
-  padding: 6px;
-  border-radius: 8px;
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+@keyframes pulse {
+  0% {
+    opacity: 1;
+    box-shadow: 0 0 6px var(--success);
+  }
 
-.refresh-btn:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-  background: var(--accent-light);
-}
+  50% {
+    opacity: 0.6;
+    box-shadow: 0 0 2px var(--success);
+  }
 
-@media (prefers-color-scheme: dark) {
-  .refresh-btn:hover {
-    background: rgba(217, 119, 6, 0.1);
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 6px var(--success);
   }
 }
 
@@ -198,7 +237,24 @@ body {
 .usage-content {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+}
+
+#usage-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow: hidden !important;
+}
+
+.last-updated {
+  margin-top: 2px;
+  /* Further reduced margin */
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 2px 0;
+  /* Further reduced padding */
+  opacity: 0.8;
 }
 
 .usage-row {
@@ -206,12 +262,11 @@ body {
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 14px;
-  transition: transform 0.2s, border-color 0.2s;
+  transition: border-color 0.2s, background-color 0.2s;
 }
 
 .usage-row:hover {
   border-color: var(--accent);
-  transform: translateY(-1px);
 }
 
 .usage-row-header {
@@ -219,24 +274,38 @@ body {
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 12px;
+  transition: none;
+  /* Removed transitions to prevent jitter during resize */
+}
+
+.usage-row-title {
+  transition: none;
 }
 
 .usage-row-title h3 {
   margin: 0;
   font-size: 14px;
   font-weight: 600;
+  transition: none;
 }
 
 .usage-row-title p {
   margin: 2px 0 0;
   font-size: 11px;
   color: var(--text-secondary);
+  transition: none;
 }
 
 .usage-percentage {
   font-size: 18px;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
+  transition: none;
+  white-space: nowrap;
+}
+
+.reset-time {
+  transition: none;
 }
 
 .usage-percentage.green {
@@ -257,6 +326,7 @@ body {
   background: var(--progress-bg);
   border-radius: 10px;
   overflow: hidden;
+  transition: height 0.3s ease;
 }
 
 .progress-fill {
@@ -281,9 +351,477 @@ body {
   margin-top: 10px;
   font-size: 11px;
   color: var(--text-secondary);
-  display: flex;
+  display: flex !important;
   align-items: center;
   gap: 4px;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Responsive breakpoints - Condensed mode */
+@media (max-width: 220px) {
+  .titlebar {
+    padding: 0 6px;
+    gap: 4px;
+  }
+
+  .titlebar-logo {
+    display: flex !important;
+    gap: 4px;
+  }
+
+  .titlebar-logo span:not(.version-badge) {
+    display: inline !important;
+  }
+
+  .titlebar-logo .version-badge {
+    display: inline-block !important;
+  }
+
+  .header-status {
+    font-size: 11px;
+  }
+
+  .status-indicator {
+    width: 4px;
+    height: 4px;
+  }
+
+  .container {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  #usage-rows {
+    gap: 12px;
+  }
+
+  .usage-row {
+    padding: 10px;
+  }
+
+  .usage-row-header {
+    margin-bottom: 8px;
+  }
+
+  .usage-row-title h3 {
+    font-size: 12px;
+  }
+
+  .usage-row-title p {
+    font-size: 10px;
+    opacity: 0.8;
+  }
+
+  .usage-percentage {
+    font-size: 16px;
+  }
+
+  .progress-bar {
+    height: 5px;
+  }
+
+  .reset-time {
+    margin-top: 8px;
+    font-size: 10px;
+  }
+}
+
+/* Header compact states - prevent overlap */
+.titlebar.compact-header .titlebar-logo span:not(.version-badge) {
+  display: none;
+}
+
+.titlebar.very-compact-header .titlebar-logo span {
+  display: none;
+}
+
+.titlebar.ultra-compact-header .titlebar-logo {
+  display: none;
+}
+
+/* Header compact states - prevent overlap */
+/* Cleaned up states */
+
+/* Very compact mode - show just percentage */
+@media (max-width: 180px) {
+  .titlebar {
+    padding: 0 4px;
+    gap: 2px;
+  }
+
+  /* Keep version badge visible - just make it smaller */
+  .version-badge {
+    font-size: 7px;
+    padding: 1px 3px;
+    display: inline-block !important;
+  }
+
+  .titlebar-logo {
+    display: flex !important;
+    gap: 3px;
+  }
+
+  .titlebar-logo span:not(.version-badge) {
+    display: inline !important;
+  }
+
+
+  /* Keep titlebar-center visible but very compact */
+  .titlebar-center {
+    flex: 0 0 auto;
+    min-width: 0;
+  }
+
+  .header-status {
+    font-size: 10px;
+    gap: 3px;
+  }
+
+  .status-indicator {
+    width: 3px;
+    height: 3px;
+  }
+
+  .titlebar-controls {
+    display: flex !important;
+    margin-left: auto !important;
+    flex: 0 0 auto !important;
+    flex-shrink: 0 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .container {
+    padding: 8px;
+    gap: 8px;
+  }
+
+  #usage-rows {
+    gap: 8px;
+  }
+
+  .usage-row {
+    padding: 8px;
+  }
+
+  .usage-row-header {
+    margin-bottom: 6px;
+    align-items: center;
+  }
+
+  .usage-row-title {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .usage-row-title h3 {
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .usage-row-title p {
+    display: none;
+  }
+
+  .usage-percentage {
+    font-size: 14px;
+    margin-left: 8px;
+  }
+
+  .progress-bar {
+    height: 4px;
+  }
+
+  .reset-time {
+    margin-top: 6px;
+    font-size: 9px;
+  }
+}
+
+/* Ultra compact - percentage only mode */
+@media (max-width: 140px) {
+  .titlebar {
+    padding: 0 2px !important;
+    gap: 2px !important;
+    justify-content: space-between;
+  }
+
+  .titlebar-controls {
+    gap: 2px !important;
+    min-width: 90px !important;
+    max-width: 90px !important;
+    width: 90px !important;
+  }
+
+  .titlebar-logo {
+    max-width: calc(100% - 95px) !important;
+    /* Reserve space for buttons */
+  }
+
+  .titlebar-logo {
+    max-width: calc(100% - 75px) !important;
+    /* Reserve space for buttons */
+  }
+
+  .titlebar-button {
+    padding: 2px !important;
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+    min-height: 20px !important;
+  }
+
+  .titlebar-button svg {
+    width: 10px !important;
+    height: 10px !important;
+  }
+
+  .titlebar-logo {
+    display: flex !important;
+    gap: 2px;
+  }
+
+  .titlebar-logo span:not(.version-badge) {
+    display: inline !important;
+  }
+
+  .titlebar-logo svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  .version-badge {
+    font-size: 6px !important;
+    padding: 0 2px !important;
+    display: inline-block !important;
+  }
+
+  .titlebar-center {
+    display: flex !important;
+    flex: 0 0 auto !important;
+    min-width: 0 !important;
+  }
+
+  .header-status {
+    font-size: 9px !important;
+    gap: 2px !important;
+  }
+
+  .status-indicator {
+    width: 3px !important;
+    height: 3px !important;
+  }
+
+  .titlebar-controls {
+    margin-left: auto !important;
+    gap: 2px;
+    flex: 0 0 auto !important;
+    flex-shrink: 0 !important;
+  }
+
+  .titlebar-button {
+    padding: 4px;
+  }
+
+  .container {
+    padding: 6px;
+    gap: 6px;
+  }
+
+  #usage-rows {
+    gap: 6px;
+  }
+
+  .usage-row {
+    padding: 6px 8px;
+  }
+
+  .usage-row-header {
+    margin-bottom: 4px;
+    justify-content: center;
+  }
+
+  .usage-row-title {
+    display: none;
+  }
+
+  .usage-percentage {
+    font-size: 16px;
+    margin: 0;
+  }
+
+  .progress-bar {
+    height: 3px;
+    margin-bottom: 2px;
+  }
+
+  /* Reset time should always be visible */
+}
+
+/* Height-based responsive adjustments */
+@media (max-height: 350px) {
+  .container {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  #usage-rows {
+    gap: 12px;
+  }
+
+  .usage-row {
+    padding: 10px;
+  }
+
+  .usage-row-header {
+    margin-bottom: 8px;
+  }
+
+  .reset-time {
+    margin-top: 6px;
+    font-size: 10px;
+  }
+}
+
+@media (max-height: 250px) {
+  .titlebar-controls {
+    display: flex !important;
+    margin-left: auto !important;
+    flex: 0 0 auto !important;
+    flex-shrink: 0 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .container {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  #usage-rows {
+    gap: 8px;
+  }
+
+  .usage-row {
+    padding: 8px;
+  }
+
+  .usage-row-title p {
+    display: none;
+  }
+
+  .usage-row-header {
+    margin-bottom: 6px;
+  }
+
+  /* Reset time should always be visible */
+
+  .progress-bar {
+    height: 4px;
+  }
+}
+
+/* Combined small width and height */
+@media (max-width: 220px) and (max-height: 300px) {
+  .titlebar-logo {
+    display: flex !important;
+  }
+
+  .titlebar-logo span:not(.version-badge) {
+    display: inline !important;
+  }
+
+  .titlebar-logo .version-badge {
+    display: inline-block !important;
+  }
+
+  .titlebar-controls {
+    display: flex !important;
+    margin-left: auto !important;
+    flex: 0 0 auto !important;
+    flex-shrink: 0 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .usage-row-title p {
+    display: none;
+  }
+
+  /* Reset time should always be visible */
+
+  .usage-row {
+    padding: 8px;
+  }
+
+  .usage-row-header {
+    margin-bottom: 6px;
+  }
+
+  .progress-bar {
+    height: 4px;
+  }
+}
+
+/* JavaScript-based adaptive classes for dynamic responsiveness */
+/* These classes have higher specificity to override media queries */
+/* Card Adaptive States */
+.usage-row.compact {
+  padding: 10px;
+}
+
+.usage-row.compact .usage-row-title p {
+  display: none;
+}
+
+.usage-row.compact .usage-percentage {
+  font-size: 16px;
+}
+
+.usage-row.ultra-compact {
+  padding: 8px;
+}
+
+.usage-row.ultra-compact .usage-row-title p {
+  display: none;
+}
+
+.usage-row.ultra-compact .usage-row-title h3 {
+  font-size: 11px;
+}
+
+.usage-row.ultra-compact .usage-percentage {
+  font-size: 14px;
+}
+
+.usage-row.percentage-only {
+  padding: 6px 12px;
+}
+
+.usage-row.percentage-only .usage-row-title,
+.usage-row.percentage-only .reset-time {
+  display: none;
+}
+
+.usage-row.percentage-only .usage-row-header {
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+/* Header Adaptive States */
+.titlebar.compact-header .titlebar-logo span:not(.version-badge) {
+  display: none;
+}
+
+.titlebar.very-compact-header .titlebar-logo span {
+  display: none;
+}
+
+.titlebar.ultra-compact-header .titlebar-logo {
+  display: none;
 }
 
 /* States */

@@ -16,7 +16,9 @@
       {
         "title": "Claude Usage",
         "width": 400,
-        "height": 600,
+        "height": 400,
+        "minWidth": 180,
+        "minHeight": 200,
         "resizable": true,
         "decorations": false,
         "transparent": true,

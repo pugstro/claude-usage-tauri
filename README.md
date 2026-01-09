@@ -4,8 +4,6 @@ A lightweight desktop app (macOS only) for displaying Claude Code usage limits.
 
 Built with [Tauri v2](https://tauri.app), TypeScript, and Rust.
 
-[GitHub](https://github.com/pugstro/claude-usage-tauri) • [Author](https://pugcorp.online)
-
 ## Features
 
 - Auto-refresh functionality
@@ -36,15 +34,15 @@ Built with [Tauri v2](https://tauri.app), TypeScript, and Rust.
 ## Setup
 
 1. Install [Claude Code](https://claude.ai/code) if you haven't already:
+
    ```bash
    npm install -g @anthropic-ai/claude-code
    ```
-
 2. Log in to Claude Code:
+
    ```bash
    claude
    ```
-
 3. Launch Claude Usage - it will automatically read your credentials from Keychain
 
 ## How It Works
@@ -70,17 +68,18 @@ Claude Usage reads your Claude Code OAuth credentials from macOS Keychain and qu
 ### Setup
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/pugstro/claude-usage-tauri.git
    cd claude-usage-tauri
    ```
-
 2. Install dependencies:
+
    ```bash
    npm install
    ```
-
 3. Run development server:
+
    ```bash
    npm run tauri dev
    ```
@@ -88,6 +87,7 @@ Claude Usage reads your Claude Code OAuth credentials from macOS Keychain and qu
 ### Build
 
 Build for production:
+
 ```bash
 npm run tauri build
 ```

@@ -173,11 +173,19 @@ pub fn run() {
             // Hide window initially
             let _ = window.hide();
 
-            // Hide on blur
+            // Hide on blur (but not if always-on-top is enabled)
             let w = window.clone();
             window.on_window_event(move |event| {
                 if let tauri::WindowEvent::Focused(false) = event {
-                    let _ = w.hide();
+                    // Only hide if always-on-top is not enabled
+                    if let Ok(is_always_on_top) = w.is_always_on_top() {
+                        if !is_always_on_top {
+                            let _ = w.hide();
+                        }
+                    } else {
+                        // If we can't check, default to hiding (original behavior)
+                        let _ = w.hide();
+                    }
                 }
             });
 
